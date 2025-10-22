@@ -5,16 +5,22 @@ from config import build_config
 from torchvision import transforms
 from PIL import Image
 
+import os
+import torch
+from torch.utils.data import Dataset
+from torchvision import transforms
+from PIL import Image
+
 class UCFFrameDataset(Dataset):
-    def __init__(self, list_file):
+    def __init__(self, list_file, transform=None):
         with open(list_file, 'r') as f:
             self.frame_dirs = [line.strip() for line in f if line.strip()]
         
-        self.transform = transforms.Compose([
+        self.transform = transform or transforms.Compose([
             transforms.Resize((224, 224)),
             transforms.ToTensor(),
-            transforms.Normalize(mean= [0.48145466, 0.4578275, 0.40821073], std=[0.26862954, 0.26130258, 0.2757771])
         ])
+        self.max_frames = 256  # desired fixed length
 
     def __len__(self):
         return len(self.frame_dirs)
@@ -36,9 +42,17 @@ class UCFFrameDataset(Dataset):
         video_tensor = torch.stack(frames)  # [T, 3, 224, 224]
         num_frames = video_tensor.shape[0]
 
+        # Zero-pad if fewer than max_frames
+        if num_frames < self.max_frames:
+            pad_size = self.max_frames - num_frames
+            pad_tensor = torch.zeros((pad_size, 3, 224, 224))
+            video_tensor = torch.cat([video_tensor, pad_tensor], dim=0)
+        else:
+            # optionally truncate if longer
+            video_tensor = video_tensor[:self.max_frames]
+
         label = 0 if "Normal" in folder_path else 1
 
-        # return without padding
         return video_tensor, num_frames, label, folder_path
 
 
