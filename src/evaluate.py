@@ -2,7 +2,7 @@
 Evaluate sript for Video Anomaly Detection & Localization model.
 
 Usage:
-    python src/evaluate.py
+    python -m src.evaluate
 """
 
 import torch
