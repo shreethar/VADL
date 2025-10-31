@@ -2,7 +2,7 @@
 Train sript for Video Anomaly Detection & Localization model.
 
 Usage:
-    python src/train.py
+    python -m src.train
 """
 
 
@@ -13,7 +13,7 @@ from src.config import build_config
 from src.helper import combined_criterion, video_scores_from_frame_scores
 from src.dataset import load_data
 import time
-import tqdm
+from tqdm import tqdm
 import numpy as np
 from sklearn.metrics import accuracy_score, f1_score
 from torch.nn.utils import clip_grad_norm_
