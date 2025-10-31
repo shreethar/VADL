@@ -54,7 +54,8 @@ def build_config():
     cfg.anomaly_prob_threshold = 0.5
     cfg.merge_distance_threshold = 60
 
+    cfg.train_set = 'src/list/train.list'
+    cfg.test_set = 'src/list/val.list'
+    cfg.test_set = 'src/list/test.list'
     
-
-
     return cfg
