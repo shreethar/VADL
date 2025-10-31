@@ -10,7 +10,7 @@ from src.model import ModelDL
 from src.config import build_config
 from src.helper import frame_scores_from_heatmap, video_scores_from_frame_scores
 from src.dataset import load_data
-import tqdm
+from tqdm import tqdm
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.metrics import confusion_matrix
