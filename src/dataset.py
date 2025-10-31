@@ -5,12 +5,6 @@ from config import build_config
 from torchvision import transforms
 from PIL import Image
 
-import os
-import torch
-from torch.utils.data import Dataset
-from torchvision import transforms
-from PIL import Image
-
 class UCFFrameDataset(Dataset):
     def __init__(self, list_file, transform=None):
         with open(list_file, 'r') as f:
