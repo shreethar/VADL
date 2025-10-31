@@ -1,7 +1,7 @@
 import os
 import torch
 from torch.utils.data import Dataset, DataLoader
-from config import build_config
+from src.config import build_config
 from torchvision import transforms
 from PIL import Image
 
