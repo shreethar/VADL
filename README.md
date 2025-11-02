@@ -139,3 +139,11 @@ Outputs:
 We modified the original PLOVAD model by removing the multi-class classifier and adding a spatial feature map. The spatial feature map is then downsampled into 1 channel to be a heatmap. The model learns that high heatmap value is anomalous and low heatmap value is normal.
 
 ![Modified PLOVAD Architecture](assets/6071115128679107349.jpg)
+
+---
+After further analyzing the heatmap values across all 3 data sets, and 2 labels, we have decided for using **0.29** as a threshold for the heatmap. If the heatmap value is below the threshold, it's considered normal, but if it's over the threshold, its considered anomalous.
+
+Here are the plots to support the threshold hyperparameter setting.
+
+![Histogram](src/results/images/Histogram.png)
+![Violinplot](src/results/images/Violinplot.png)
