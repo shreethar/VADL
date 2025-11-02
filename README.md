@@ -1,4 +1,4 @@
-# 🎥 VADL — Video Anomaly Detection & Localization
+# VADL — Video Anomaly Detection & Localization
 
 VADL is an AI-powered framework for detecting and localizing anomalies in video data.  
 It leverages deep learning models to learn normal spatiotemporal patterns and identify deviations in unseen footage.
@@ -12,6 +12,9 @@ It leverages deep learning models to learn normal spatiotemporal patterns and id
 VADL/
 │
 ├── src/
+│   ├── results/             # Contains image output and model weight output
+│   │   ├── images/          # Contains image output of Evaluation and EDA
+│   │   └── model_files/     # Contains the PyTorch model weight & the ONNX output
 │   ├── preprocessing.py     # Data preprocessing (frame extraction, normalization, etc.)
 │   ├── train.py             # Model training
 │   ├── evaluate.py          # Model evaluation on validation/test sets
@@ -21,10 +24,6 @@ VADL/
 │   ├── dataset.py           # Dataset loader utilities
 │   ├── helper.py            # Helper functions and metrics
 │   └── config.py            # Configuration builder
-│
-├── data/                    # Raw and processed data
-├── checkpoints/             # Saved model weights
-├── outputs/                 # Evaluation results, ONNX models, etc.
 ├── requirements.txt
 └── README.md
 
@@ -34,14 +33,14 @@ VADL/
 
 ## ⚙️ Setup
 
-### 1️⃣ Create Environment
+### Create Environment
 ```bash
 python -m venv vadl-env
 source vadl-env/bin/activate   # (Linux/Mac)
 vadl-env\Scripts\activate      # (Windows)
 ````
 
-### 2️⃣ Install Dependencies
+### Install Dependencies
 
 ```bash
 pip install -r requirements.txt
@@ -49,35 +48,34 @@ pip install -r requirements.txt
 
 ---
 
-## 🚀 Running the Project
+## Running the Project
 
 Follow these steps **in order** to fully execute the VADL pipeline:
 
 ---
 
-### 🧩 Step 1 — Preprocessing
+### Step 1 — Preprocessing
 
 Extract frames, normalize, and prepare datasets.
 
 ```bash
-python src/preprocessing.py
+python -m src.preprocessing
 ```
 
 This script will:
 
 * Extract frames from input videos.
-* Normalize and resize them.
-* Split into training/validation/test sets.
-* Save processed data under `data/processed/`.
+* Sample one out of 16 frames.
+* Sample until it reaches the end of video, or 256.
 
 ---
 
-### 🧠 Step 2 — Training
+### Step 2 — Training
 
 Train the anomaly detection model.
 
 ```bash
-python src/train.py
+python -m src.train
 ```
 
 This will:
@@ -85,68 +83,53 @@ This will:
 * Load the preprocessed dataset.
 * Initialize the model from `model.py`.
 * Log metrics (accuracy, F1-score, loss) via Weights & Biases or local logs.
-* Save the trained weights to `checkpoints/`.
+* Save the trained weights to `src/results/model_files/`.
 
 ---
 
-### 📊 Step 3 — Evaluation
+### Step 3 — Evaluation
 
-Evaluate the trained model on validation or test data.
+Evaluate the trained model on validation and test data.
 
 ```bash
-python src/evaluate.py
+python -m src.evaluate
 ```
 
 Generates:
 
 * Quantitative metrics (accuracy, F1, precision, recall).
-* Visualization plots under `outputs/`.
+* Visualization plots under `src/results/images/`.
 
 ---
 
-### 🔄 Step 4 — Convert to ONNX
+### Step 4 — Convert to ONNX
 
 Convert the PyTorch model to ONNX format for deployment or inference optimization.
 
 ```bash
-python src/convertonnx.py
+python -m src.convertonnx
 ```
 
 Output:
 
 ```
-outputs/model_vadl.onnx
+src/model_files/VADL_model_ONNX.onnx
 ```
 
 ---
 
-### 🎯 Step 5 — Inference
+### Step 5 — Inference
 
 Run inference on new video files or camera streams.
 
 ```bash
-python src/infer.py
+python -m src.infer
 ```
 
-Example:
-
-```bash
-python src/infer.py --video path/to/test_video.mp4
-```
 
 Outputs:
 
 * Frame-level anomaly scores.
-* Optional visualization of detected anomalies (bounding boxes or heatmaps).
-* Log file under `outputs/inference_results/`.
-
----
-
-## 🧠 Key Features
-
-* 🔍 **Anomaly Detection:** Learns normal spatiotemporal patterns and detects unusual activity.
-* 🕵️ **Localization:** Highlights regions of anomalies in the video.
-* ⚡ **ONNX Export:** Optimized model ready for real-time deployment.
-* 📈 **Evaluation Metrics:** Includes F1, accuracy, and custom anomaly scoring.
+* Bounding box visualization of detected anomalies.
 
 ---
