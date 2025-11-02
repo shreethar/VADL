@@ -146,7 +146,7 @@ We modified the original PLOVAD model by removing the multi-class classifier and
 ---
 After further analyzing the heatmap values across all 3 data sets, and 2 labels, we have decided for using **0.29** as a threshold for the heatmap. If the heatmap value is below the threshold, it's considered normal, but if it's over the threshold, its considered anomalous.
 
-Here are the plots to support the threshold hyperparameter setting.
+Here are the plots to support the threshold hyperparameter setting. We are using the normal label from the validation dataset to get the threshold.
 
 ![Histogram](src/results/images/Histogram.png)
 ![Violinplot](src/results/images/Violinplot.png)
