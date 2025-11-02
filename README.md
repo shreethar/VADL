@@ -137,3 +137,5 @@ Outputs:
 # PLOVAD Localization & Optimization Report
 
 We modified the original PLOVAD model by removing the multi-class classifier and adding a spatial feature map. The spatial feature map is then downsampled into 1 channel to be a heatmap. The model learns that high heatmap value is anomalous and low heatmap value is normal.
+
+![Modified PLOVAD Architecture](assets/6071115128679107349.jpg)
