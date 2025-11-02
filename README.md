@@ -136,6 +136,9 @@ Outputs:
 
 # PLOVAD Localization & Optimization Report
 
+This repository contains the integration of localization in PLOVAD architecture and performance analysis. The objective was to include localization head (Output the bounding box wherever an anomaly is occuring), and minimize the inference time.
+The model was inferenced on NVIDIA A4000 with 16GB VRAM.
+
 We modified the original PLOVAD model by removing the multi-class classifier and adding a spatial feature map. The spatial feature map is then downsampled into 1 channel to be a heatmap. The model learns that high heatmap value is anomalous and low heatmap value is normal.
 
 ![Modified PLOVAD Architecture](assets/6071115128679107349.jpg)
@@ -147,3 +150,28 @@ Here are the plots to support the threshold hyperparameter setting.
 
 ![Histogram](src/results/images/Histogram.png)
 ![Violinplot](src/results/images/Violinplot.png)
+
+---
+After including the localization head, our next goal is to proceed with exporting the PyTorch model to ONNX.
+
+Here is the time taken to do inference for video samples of different frame numbers.
+
+## ONNX vs PyTorch
+| Frames | ONNX | PyTorch |
+|--------|---------|------|
+| 106 | 1.64 | 1.07 |
+| 256 | 1.65 | 2.57 |
+| 256 | 1.71 | 2.51 |
+| 256 | 1.50 | 2.53 |
+| 256 | 1.71 | 2.53 |
+| 177 | 1.73 | 1.75 |
+| 72 | 1.87 | 0.68 |
+| 72 | 2.12 | 0.68 |
+| 109 | 1.76 | 1.12 |
+| 165 | 1.79 | 1.73 |
+| 130 | 1.66 | 1.32 |
+| 196 | 1.90 | 1.96 |
+
+> Observation: We can see that no matter the frame number, the time taken is always around 1.6s to 1.8s for ONNX while for PyTorch it depends on the number of frames.
+> If the number of frames is high, then ONNX does inference faster and if the number of frame is low, then PyTorch does inference faster.
+> In our case, we will be setting the frame number at 256 for inferencing. It takes ONNX around 1.7 second and PyTorch around 2.6 seconds. That's a **38%** speed increase.
