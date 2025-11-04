@@ -183,7 +183,7 @@ Here is the inference time taken for both PyTorch and ONNX model.
 ---
 
 We have constructed a custom loss so that both **detection head** and **localization head** learns if a video is anomalous or not.\
-**Pros:** The model can learn where the anomaly occurs, so the model can localize the anomaly.
+**Pros:** The model can learn where the anomaly occurs, so the model can localize the anomaly.\
 **Cons:** Detecting anomalies is easier, so we have to stop learning when the model reaches the point where increasing detecting performance would worsen localization performance.
 
 Here is the Confusion Matrix for the detection output of the model
