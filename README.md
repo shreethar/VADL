@@ -11,6 +11,8 @@ The goal of this project is to detect anomalies in videos.\
 For this project, we used [PLOVAD: Prompting Vision-Language Models for Open Vocabulary Video Anomaly Detection](https://github.com/ctX-u/PLOVAD) to do anomaly detection and multi-class classification.\
 Here are the attached result that we got from our initial testing.
 
+![Binary Classification Confusion Matrix](assets/Binary_Classification_Confusion_Matrix_P1.png)
+
 ---
 
 # Project 2 — Video Anomaly Detection & Localization | Optimization
@@ -157,12 +159,14 @@ We modified the original PLOVAD model by removing the multi-class classifier and
 ![Modified PLOVAD Architecture](assets/6071115128679107349.jpg)
 
 ---
-After further analyzing the heatmap values across all 3 data sets, and 2 labels, we have decided for using **0.29** as a threshold for the heatmap. If the heatmap value is below the threshold, it's considered normal, but if it's over the threshold, its considered anomalous.
+After further analyzing the heatmap values across all 3 data sets, and 2 labels, we have decided for using **μ + 3σ** as a threshold for the heatmap. If the heatmap value is below the threshold, it's considered normal, but if it's over the threshold, its considered anomalous.
 
 Here are the plots to support the threshold hyperparameter setting. We are using the normal label from the validation dataset to get the threshold.
 
 ![Histogram](src/results/images/Histogram.png)
 ![Violinplot](src/results/images/Violinplot.png)
+
+It is important to note that the exact value changes for each run, so it's recommended to calculate mean and standard deviation after every run and test it.
 
 ---
 After including the localization head, our next goal is to proceed with exporting the PyTorch model to ONNX.
@@ -175,3 +179,13 @@ Here is the inference time taken for both PyTorch and ONNX model.
 
 
 > Observation: We can see that no matter the frame number, the time taken is always around 1.5s to 1.8s for ONNX while for PyTorch it is around 2.5s to 3.0s.
+
+---
+
+We have constructed a custom loss so that both **detection head** and **localization head** learns if a video is anomalous or not.\
+**Pros:** The model can learn where the anomaly occurs, so the model can localize the anomaly.
+**Cons:** Detecting anomalies is easier, so we have to stop learning when the model reaches the point where increasing detecting performance would worsen localization performance.
+
+Here is the Confusion Matrix for the detection output of the model
+
+![Binary Classification Confusion Matrix](src/results/images/Validation%20Set%20Confusion%20Matrix.png)
