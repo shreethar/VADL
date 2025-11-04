@@ -1,9 +1,20 @@
-# VADL — Video Anomaly Detection & Localization
+# MIMOS x AI — VADL Video Anomaly Detection & Localization
 
 VADL is an AI-powered framework for detecting and localizing anomalies in video data.  
 It leverages deep learning models to learn normal spatiotemporal patterns and identify deviations in unseen footage.
 
 ---
+
+# Project 1 — Video Anomaly Detection
+
+The goal of this project is to detect anomalies in videos. For this project, we used [PLOVAD: Prompting Vision-Language Models for Open Vocabulary Video Anomaly Detection](https://github.com/ctX-u/PLOVAD) to do anomaly detection and multi-class classification.
+Here are the attached result that we got from our initial testing.
+
+---
+
+# Project 2 — Video Anomaly Detection & Localization | Optimization
+
+The goal of project 2 is to add **localization** feature to our previous project and then optimize it further to decrease inference time. For this project, we added a **localization head** to generate bounding box and then used **ONNX** to optimize and fuse computational graph to decrease the time taken.
 
 ## 📁 Project Structure
 
