@@ -167,11 +167,11 @@ Here are the plots to support the threshold hyperparameter setting. We are using
 ---
 After including the localization head, our next goal is to proceed with exporting the PyTorch model to ONNX.
 
-Here is the inference time taken for btoh PyTorch and ONNX model.
+Here is the inference time taken for both PyTorch and ONNX model.
 
-![PyTorch vs ONNX Inference Time Comparison](assets/assets/PyTorch vs ONNX Inference Time Comparison.png)
+![PyTorch vs ONNX Inference Time Comparison](assets/PyTorch%20vs%20ONNX%20Inference%20Time%20Comparison.png)
 
-![Inference Time over Number of Frames](assets/Inference Time over Number of Frames.png)
+![Inference Time over Number of Frames](assets/Inference%20Time%20over%20Number%20of%20Frames.png)
 
 
 > Observation: We can see that no matter the frame number, the time taken is always around 1.5s to 1.8s for ONNX while for PyTorch it is around 2.5s to 3.0s.
