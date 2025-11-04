@@ -7,7 +7,8 @@ It leverages deep learning models to learn normal spatiotemporal patterns and id
 
 # Project 1 — Video Anomaly Detection
 
-The goal of this project is to detect anomalies in videos. For this project, we used [PLOVAD: Prompting Vision-Language Models for Open Vocabulary Video Anomaly Detection](https://github.com/ctX-u/PLOVAD) to do anomaly detection and multi-class classification.
+The goal of this project is to detect anomalies in videos.
+For this project, we used [PLOVAD: Prompting Vision-Language Models for Open Vocabulary Video Anomaly Detection](https://github.com/ctX-u/PLOVAD) to do anomaly detection and multi-class classification.
 Here are the attached result that we got from our initial testing.
 
 ---
