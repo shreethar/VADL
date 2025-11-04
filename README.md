@@ -1,21 +1,22 @@
 # MIMOS x AI — VADL Video Anomaly Detection & Localization
 
 VADL is an AI-powered framework for detecting and localizing anomalies in video data.  
-It leverages deep learning models to learn normal spatiotemporal patterns and identify deviations in unseen footage.
+It leverages deep learning models to learn normal and abnormal spatiotemporal patterns and detect abnormal scen in unseen footage.
 
 ---
 
 # Project 1 — Video Anomaly Detection
 
 The goal of this project is to detect anomalies in videos.\
-For this project, we used [PLOVAD: Prompting Vision-Language Models for Open Vocabulary Video Anomaly Detection](https://github.com/ctX-u/PLOVAD) to do anomaly detection and multi-class classification.
+For this project, we used [PLOVAD: Prompting Vision-Language Models for Open Vocabulary Video Anomaly Detection](https://github.com/ctX-u/PLOVAD) to do anomaly detection and multi-class classification.\
 Here are the attached result that we got from our initial testing.
 
 ---
 
 # Project 2 — Video Anomaly Detection & Localization | Optimization
 
-The goal of project 2 is to add **localization** feature to our previous project and then optimize it further to decrease inference time. For this project, we added a **localization head** to generate bounding box and then used **ONNX** to optimize and fuse computational graph to decrease the time taken.
+The goal of project 2 is to add **localization** feature to our previous project and then optimize it further to decrease inference time.\
+For this project, we added a **localization head** to generate bounding box and then used **ONNX** to optimize and fuse computational graph to decrease the time taken.
 
 ## 📁 Project Structure
 
@@ -166,24 +167,11 @@ Here are the plots to support the threshold hyperparameter setting. We are using
 ---
 After including the localization head, our next goal is to proceed with exporting the PyTorch model to ONNX.
 
-Here is the time taken to do inference for video samples of different frame numbers.
+Here is the inference time taken for btoh PyTorch and ONNX model.
 
-## ONNX vs PyTorch
-| Frames | ONNX | PyTorch |
-|--------|---------|------|
-| 106 | 1.64 | 1.07 |
-| 256 | 1.65 | 2.57 |
-| 256 | 1.71 | 2.51 |
-| 256 | 1.50 | 2.53 |
-| 256 | 1.71 | 2.53 |
-| 177 | 1.73 | 1.75 |
-| 72 | 1.87 | 0.68 |
-| 72 | 2.12 | 0.68 |
-| 109 | 1.76 | 1.12 |
-| 165 | 1.79 | 1.73 |
-| 130 | 1.66 | 1.32 |
-| 196 | 1.90 | 1.96 |
+![PyTorch vs ONNX Inference Time Comparison](assets/assets/PyTorch vs ONNX Inference Time Comparison.png)
 
-> Observation: We can see that no matter the frame number, the time taken is always around 1.6s to 1.8s for ONNX while for PyTorch it depends on the number of frames.
-> If the number of frames is high, then ONNX does inference faster and if the number of frame is low, then PyTorch does inference faster.
-> In our case, we will be setting the frame number at 256 for inferencing. It takes ONNX around 1.7 second and PyTorch around 2.6 seconds. That's a **38%** speed increase.
+![Inference Time over Number of Frames](assets/Inference Time over Number of Frames.png)
+
+
+> Observation: We can see that no matter the frame number, the time taken is always around 1.5s to 1.8s for ONNX while for PyTorch it is around 2.5s to 3.0s.
